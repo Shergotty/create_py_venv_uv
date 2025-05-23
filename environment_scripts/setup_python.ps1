@@ -28,25 +28,14 @@ function install_python {
     Write-Output "Python installation file deleted from $outpath"
 }
 
-function setup_venv {
-    if (!(Test-Path env:VIRTUAL_ENV)) {
-        python -m pip install --upgrade pip
-        python -m venv .\venv
-        }
-    .\venv\Scripts\Activate
-    Write-Output "venv active"
-    Write-Output "venv installed in $env:VIRTUAL_ENV"
-}
 
 # check if an ErrorRecord was returned or [System.Version] is less than $reference_version
 if (!($p -is [System.Management.Automation.ErrorRecord] -or $version_number -lt $reference_version)) {
     # return as is and run setup_venv
     Write-Output $p" installed"
-    setup_venv
 }
 else {
     # otherwise grab the version string from the error message and run install_python  
     Write-Output "python has not been found or your version number is lower than Python $reference_version"
     install_python
-    setup_venv
 }
