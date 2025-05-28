@@ -1,2 +1,2 @@
 pip install uv
-uv init project # uv install
+uv init # uv install
